@@ -8,11 +8,11 @@
 
 #define MAXLEN 100
 
-extern FILE *input_file;
-extern FILE *customer_file;
-extern FILE *supplier_file;
-extern FILE *product_file;
-extern FILE *sales_file;
+FILE *input_file;
+FILE *customer_file;
+FILE *supplier_file;
+FILE *product_file;
+FILE *sales_file;
 
 extern int make_sales(void);
 extern int get_product_data(void);
@@ -52,7 +52,7 @@ struct products
     char name[MAXLEN];
     char classification[MAXLEN];
     char mname[MAXLEN];
-    char uc[20];
+    float uc;
     char mc[30];
     char is[16];
 };
@@ -64,11 +64,14 @@ struct sales
     char lname[MAXLEN];
     char pname[MAXLEN];
     int num;
-    char tc[MAXLEN];
+    float tc;
     char sname[MAXLEN];
     char scompany[MAXLEN];
     char cphonenumber[16];
     int customerid;
+    int date;
+    int month;
+    int year;
 };
 
 struct products newPRODUCTS;

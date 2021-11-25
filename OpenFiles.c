@@ -32,5 +32,5 @@ void open_files(void)
 	    sales_file=fopen("sales.dat","rb+");
 	}
 }
-
+##
 #endif

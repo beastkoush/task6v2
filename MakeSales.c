@@ -7,6 +7,9 @@ int make_sales(void){
 	
 	int customer_ID, Product_ID, quntity;
 	
+    printf("\nEnter date of sale (DD/MM/YYYY): ");
+    scanf("%d/%d/%d",&newSALES.date,&newSALES.month,&newSALES.year);
+  //  printf("%d/%d/%d",newSALES.date,newSALES.month,newSALES.year);
 	printf("Enter customer ID: ");
     scanf("%d",&customer_ID);
     fseek(customer_file, customer_ID * sizeof(newCUSTOMER), SEEK_SET);
@@ -20,12 +23,12 @@ int make_sales(void){
     }
     else
     {
-        printf("Customer does not exist in system. Please enter data manually.\n");
+        printf("\nCustomer does not exist in system. Please enter data manually.\n");
         return 0;
     }
 	
 	 
-    printf("\nEnter the Product ID: ");
+    printf("Enter the Product ID: ");
     scanf("%d",&Product_ID);
     fseek(product_file, Product_ID * sizeof(newPRODUCTS), SEEK_SET);
     
@@ -47,8 +50,9 @@ int make_sales(void){
     else
 	{
     	printf("%d items in stock\n",quntity);
+        
         strcpy(newSALES.pname,newPRODUCTS.name);
-        strcpy(newSALES.tc,newPRODUCTS.uc);
+        newSALES.tc=newPRODUCTS.uc*newSALES.num;
 	}
         
     if(get_supplier_record())
@@ -64,8 +68,11 @@ int make_sales(void){
     
     fseek(sales_file,newSALES.said*sizeof(struct sales), SEEK_SET);
     fwrite(&newSALES,sizeof(struct sales),1,sales_file);
-    printf("\nThe folloing Sale is made:");
-    printf("\nCustomer Name (FN LN): %s %s\nCustomer ID: %d\nProduct Name: %s\nQuantity: %d\nCost per Unit: %s\nSupplier Name: %s\nCompany Name: %s\n\n",newSALES.fname, newSALES.lname,newSALES.customerid,newSALES.pname,newSALES.num, newSALES.tc,newSALES.sname,newSALES.scompany);
+    printf("\nThe folloing Sale is made:\n");
+    printf("\n Customer Name (FN LN): %s %s\n Customer ID: %d\n Product Name: %s\n Quantity: %d\n Total Cost: %.2f\n Supplier Name: %s\n Company Name: %s\n",newSALES.fname, newSALES.lname,newSALES.customerid,newSALES.pname,newSALES.num, newSALES.tc,newSALES.sname,newSALES.scompany);
+    newSALES.said++;
+    fclose(sales_file);
+    open_files();
     return 0;
 }
 
